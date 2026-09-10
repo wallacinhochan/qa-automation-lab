@@ -1,0 +1,26 @@
+{
+  "name": "qa-automation-lab",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Independent QA automation study lab using a local SUT.",
+  "license": "MIT",
+  "scripts": {
+    "test": "playwright test",
+    "test:e2e": "playwright test tests/e2e",
+    "test:api": "playwright test tests/api",
+    "test:ui": "playwright test --ui",
+    "test:report": "playwright show-report",
+    "sut:setup": "powershell -ExecutionPolicy Bypass -File scripts/sut.ps1 setup",
+    "sut:up": "powershell -ExecutionPolicy Bypass -File scripts/sut.ps1 up",
+    "sut:down": "powershell -ExecutionPolicy Bypass -File scripts/sut.ps1 down"
+  },
+  "devDependencies": {
+    "@playwright/test": "latest",
+    "@types/node": "^22.20.2",
+    "dotenv": "latest",
+    "typescript": "latest"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
