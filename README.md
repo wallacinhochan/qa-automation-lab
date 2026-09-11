@@ -1,42 +1,84 @@
 # QA Automation Lab
 
 Laboratório autoral de qualidade de software para estudar test design, API, E2E,
-banco de dados, CI/CD, performance, segurança e observabilidade.
+banco de dados, CI/CD, performance, segurança e observabilidade usando um único
+sistema sob teste.
 
-O primeiro sistema sob teste (SUT) é uma instância local do **Mattermost®**. O
-produto, seu código-fonte e sua suíte oficial de testes não fazem parte deste
-repositório.
+O SUT é uma instância local do
+[Restful Booker Platform](https://github.com/mwinteringham/restful-booker-platform),
+uma plataforma de reservas criada para treinamento em exploração, estratégia e
+automação de testes. O checkout e a suíte oficial do SUT não fazem parte deste
+repositório. A única exceção derivada do projeto original é o Dockerfile de
+compatibilidade descrito na seção de licença.
 
-> Projeto independente, educacional e não afiliado, patrocinado ou aprovado
-> pela Mattermost, Inc. Mattermost é uma marca da Mattermost, Inc.
+> Projeto educacional independente. Os testes, planos e evidências deste
+> laboratório não são a suíte oficial do Restful Booker Platform.
 
 ## Começando
 
-Pré-requisitos: Node.js 20 ou superior, npm e Docker Desktop.
+Pré-requisitos: Windows com PowerShell, Node.js 20 ou superior, npm e Docker
+Desktop em execução.
 
 ```powershell
-npm install
-npx playwright install
+npm ci
+npx playwright install chromium
 Copy-Item .env.example .env
 npm run sut:setup
 npm run sut:up
 npm test
 ```
 
-A aplicação local fica disponível em `http://localhost:8065`. Na primeira
-execução, conclua o cadastro do administrador pela interface antes de rodar
-testes que dependam de autenticação.
+A primeira construção dos containers pode levar alguns minutos. O Maven e o
+Java necessários para compilar o SUT rodam em um container; a suíte oficial é
+ignorada durante essa compilação. A interface fica disponível em
+`http://localhost`, e a API de reservas em `http://localhost:3100`; as
+credenciais públicas do laboratório são `admin` / `password`.
+
+O laboratório usa um Dockerfile próprio apenas para fornecer ao build da
+interface as URLs internas dos serviços. O checkout original em `.sut/` não é
+alterado. O setup usa a revisão testada
+[`d36bd3f`](https://github.com/mwinteringham/restful-booker-platform/commit/d36bd3f8647a091d406e53bad463c5e3e5d2ece1)
+para que execuções futuras usem a mesma versão do SUT.
+
+## Swagger e APIs
+
+Cada microsserviço possui sua própria documentação Swagger. O ambiente precisa
+estar em execução com `npm run sut:up` para que os links funcionem. Abra o
+Swagger UI pelas rotas `/api/*` da interface principal; o acesso direto pelas
+portas dos microsserviços abre a página, mas não resolve corretamente o endereço
+do contrato OpenAPI.
+
+| Serviço | API | Swagger |
+| --- | --- | --- |
+| Reservas | `http://localhost:3100/booking` | [Abrir Swagger de reservas](http://localhost/api/booking/swagger-ui/index.html) |
+| Quartos | `http://localhost:3001/room` | [Abrir Swagger de quartos](http://localhost/api/room/swagger-ui/index.html) |
+| Branding | `http://localhost:3002/branding` | [Abrir Swagger de branding](http://localhost/api/branding/swagger-ui/index.html) |
+| Autenticação | `http://localhost:3004/auth` | [Abrir Swagger de autenticação](http://localhost/api/auth/swagger-ui/index.html) |
+| Relatórios | `http://localhost:3005/report` | [Abrir Swagger de relatórios](http://localhost/api/report/swagger-ui/index.html) |
+| Mensagens | `http://localhost:3006/message` | [Abrir Swagger de mensagens](http://localhost/api/message/swagger-ui/index.html) |
+
+O contrato OpenAPI em JSON usado pelo Swagger segue o padrão
+`http://localhost/api/<serviço>/v3/api-docs`. Por exemplo:
+
+```text
+http://localhost/api/room/v3/api-docs
+```
+
+A interface principal está em [http://localhost](http://localhost). As rotas
+`/api/*` dessa interface funcionam como proxy para os microsserviços internos.
 
 ## Estrutura
 
 ```text
 docs/                  estratégia, planos e registros de estudo
+docker/                adaptação GPL-3.0 do build da interface do SUT
+LICENSES/              licenças aplicáveis a arquivos derivados
 scripts/               automação do ambiente local
 tests/
   api/                  testes pela API REST
   e2e/                  jornadas pela interface
   fixtures/             dados e fixtures próprios
-.sut/                   checkout local do SUT (ignorado pelo Git)
+.sut/                   checkout local GPL-3.0 do SUT (ignorado pelo Git)
 ```
 
 ## Comandos
@@ -45,9 +87,12 @@ tests/
 - `npm run test:e2e`: executa apenas testes E2E.
 - `npm run test:api`: executa apenas testes de API.
 - `npm run test:ui`: abre o modo interativo do Playwright.
+- `npm run test:report`: abre o último relatório HTML gerado.
+- `npm run typecheck`: valida os arquivos TypeScript sem gerar código.
 - `npm run sut:setup`: baixa a configuração Docker oficial do SUT localmente.
-- `npm run sut:up`: inicia o ambiente local.
+- `npm run sut:up`: constrói e inicia o ambiente local.
 - `npm run sut:down`: encerra o ambiente sem apagar seus dados.
+- `npm run sut:status`: mostra o estado dos serviços do SUT.
 
 ## Segurança do laboratório
 
@@ -63,6 +108,8 @@ planejamento.
 
 ## Licença
 
-O código autoral deste laboratório é disponibilizado sob a licença MIT. Isso não
-altera nem substitui as licenças do Mattermost ou de qualquer dependência.
-
+Os testes, scripts e documentos autorais deste laboratório são disponibilizados
+sob a licença MIT. O arquivo `docker/restful-booker-assets.Dockerfile`, derivado
+do projeto original, permanece sob GPL-3.0-only; o texto correspondente está em
+`LICENSES/GPL-3.0.txt`. Isso não altera as licenças do Restful Booker Platform ou
+de qualquer dependência.

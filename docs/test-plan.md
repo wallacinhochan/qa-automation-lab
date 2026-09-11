@@ -2,21 +2,20 @@
 
 ## Objetivo
 
-Avaliar os fluxos críticos de uma instância local do SUT e construir evidências
-reproduzíveis sobre comportamento, riscos e qualidade.
+Avaliar os fluxos críticos de uma instância local do Restful Booker Platform e
+construir evidências reproduzíveis sobre comportamento, riscos e qualidade.
 
 ## Escopo inicial
 
-- Autenticação e encerramento de sessão.
-- Criação e acesso a equipes e canais.
-- Envio, edição e exclusão de mensagens.
-- Perfis, papéis e permissões.
-- API REST dos mesmos fluxos críticos.
+- Autenticação e encerramento de sessão administrativa.
+- Consulta de quartos e disponibilidade.
+- Criação, edição e cancelamento de reservas.
+- Administração de quartos, mensagens e relatórios.
+- APIs REST dos mesmos fluxos críticos.
 
 ## Fora do escopo inicial
 
 - Código-fonte e suíte oficial do fornecedor.
-- Funcionalidades comerciais que exigem licença.
 - Testes destrutivos, de carga ou segurança em ambientes públicos.
 - Dados reais ou provenientes do trabalho.
 
@@ -39,4 +38,3 @@ reproduzíveis sobre comportamento, riscos e qualidade.
 - Cenários prioritários executados.
 - Falhas reproduzíveis com evidências sem dados sensíveis.
 - Riscos residuais e limitações descritos.
-

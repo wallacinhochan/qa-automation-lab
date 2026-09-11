@@ -6,7 +6,8 @@ jurídico.
 ## O que pertence a este repositório
 
 Os testes, fixtures, scripts e textos escritos especificamente para este
-laboratório são autorais e estão sob a licença MIT deste repositório.
+laboratório são autorais e estão sob a licença MIT deste repositório, exceto
+quando um arquivo indicar explicitamente outra licença.
 
 ## O que não deve ser copiado
 
@@ -21,18 +22,26 @@ licença aplicável e preserve os avisos exigidos. Prefira links e paráfrases.
 
 ## Como o SUT é usado
 
-O checkout oficial Docker fica em `.sut/`, que é ignorado pelo Git. Ele é usado
-sem alteração como infraestrutura local e mantém sua própria licença. Nenhuma
+O checkout do Restful Booker Platform fica em `.sut/`, que é ignorado pelo Git.
+Ele é usado como infraestrutura local e mantém sua licença GPL-3.0. Nenhuma
 licença de terceiro é relicenciada pela licença MIT deste laboratório.
 
-## Marca
+## Arquivo derivado distribuído
 
-Use “Mattermost” apenas para identificar com precisão o sistema que está sendo
-testado. Não use o logotipo, não sugira parceria ou aprovação e prefira um nome
-neutro para o repositório. Inclua o aviso:
+O arquivo `docker/restful-booker-assets.Dockerfile` deriva do Dockerfile da
+interface do Restful Booker Platform e contém uma modificação para disponibilizar
+as URLs internas dos serviços durante o build do Next.js. Esse arquivo mantém a
+licença GPL-3.0-only, identifica sua origem no próprio cabeçalho e é acompanhado
+pelo texto da licença em `LICENSES/GPL-3.0.txt`.
 
-> Projeto independente, educacional e não afiliado, patrocinado ou aprovado
-> pela Mattermost, Inc. Mattermost é uma marca da Mattermost, Inc.
+Os demais arquivos autorais continuam sob MIT. A licença MIT da raiz não altera
+a licença do arquivo derivado.
+
+## Independência da suíte
+
+Os testes existentes no projeto de origem não são copiados, alterados ou usados
+como base. A automação deste laboratório é escrita do zero no diretório `tests/`
+e identificada como uma suíte educacional independente.
 
 ## Evidências públicas
 
@@ -47,8 +56,5 @@ Antes de publicar traces, vídeos, relatórios ou screenshots:
 
 ## Fontes oficiais consultadas
 
-- Licença do código-fonte: https://github.com/mattermost/mattermost/blob/master/LICENSE.txt
-- Ambiente Docker oficial: https://github.com/mattermost/docker
-- Guia oficial de containers: https://docs.mattermost.com/deployment-guide/server/deploy-containers
-- Política de marcas: https://mattermost.com/trademark-standards-of-use/
-
+- Projeto de origem: https://github.com/mwinteringham/restful-booker-platform
+- Licença GPL-3.0 do SUT: https://github.com/mwinteringham/restful-booker-platform/blob/trunk/LICENSE

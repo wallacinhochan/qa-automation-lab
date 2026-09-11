@@ -1,0 +1,8 @@
+services:
+  rbp-booking:
+    ports: !override
+      - "3100:3000"
+  rbp-assets:
+    build:
+      context: ./assets
+      dockerfile: ../../../docker/restful-booker-assets.Dockerfile

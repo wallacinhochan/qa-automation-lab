@@ -10,15 +10,17 @@
     "test:api": "playwright test tests/api",
     "test:ui": "playwright test --ui",
     "test:report": "playwright show-report",
+    "typecheck": "tsc --noEmit",
     "sut:setup": "powershell -ExecutionPolicy Bypass -File scripts/sut.ps1 setup",
     "sut:up": "powershell -ExecutionPolicy Bypass -File scripts/sut.ps1 up",
-    "sut:down": "powershell -ExecutionPolicy Bypass -File scripts/sut.ps1 down"
+    "sut:down": "powershell -ExecutionPolicy Bypass -File scripts/sut.ps1 down",
+    "sut:status": "powershell -ExecutionPolicy Bypass -File scripts/sut.ps1 status"
   },
   "devDependencies": {
-    "@playwright/test": "latest",
-    "@types/node": "^22.20.2",
-    "dotenv": "latest",
-    "typescript": "latest"
+    "@playwright/test": "1.63.0",
+    "@types/node": "22.20.2",
+    "dotenv": "17.4.2",
+    "typescript": "7.0.2"
   },
   "engines": {
     "node": ">=20"
