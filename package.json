@@ -4,6 +4,10 @@
   "private": true,
   "description": "Independent QA automation study lab using a local SUT.",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wallacinhochan/qa-automation-lab.git"
+  },
   "scripts": {
     "test": "playwright test",
     "test:e2e": "playwright test tests/e2e",
