@@ -16,12 +16,11 @@ compatibilidade descrito na seção de licença.
 
 ## Começando
 
-Pré-requisitos: Windows com PowerShell, Node.js 20 ou superior, npm e Docker
+Pré-requisitos: Windows com PowerShell, Node.js 20.1 ou superior, npm e Docker
 Desktop em execução.
 
 ```powershell
 npm ci
-npx playwright install chromium
 Copy-Item .env.example .env
 npm run sut:setup
 npm run sut:up
@@ -39,6 +38,11 @@ interface as URLs internas dos serviços. O checkout original em `.sut/` não é
 alterado. O setup usa a revisão testada
 [`d36bd3f`](https://github.com/mwinteringham/restful-booker-platform/commit/d36bd3f8647a091d406e53bad463c5e3e5d2ece1)
 para que execuções futuras usem a mesma versão do SUT.
+
+O Cypress 15.21.1 é instalado pelo `npm ci`, incluindo seu navegador Electron.
+Os testes deste laboratório ficam em `cypress/e2e/` e são independentes dos
+testes oficiais do SUT. Para desenvolver com o runner visual, use
+`npm run test:ui`; para uma execução headless completa, use `npm test`.
 
 ## Swagger e APIs
 
@@ -74,20 +78,22 @@ docs/                  estratégia, planos e registros de estudo
 docker/                adaptação GPL-3.0 do build da interface do SUT
 LICENSES/              licenças aplicáveis a arquivos derivados
 scripts/               automação do ambiente local
-tests/
-  api/                  testes pela API REST
-  e2e/                  jornadas pela interface
+cypress/
+  e2e/api/              testes pela API REST
+  e2e/web/              jornadas pela interface
   fixtures/             dados e fixtures próprios
+  support/              configuração e comandos compartilhados
+cypress.config.ts       configuração do runner Cypress
 .sut/                   checkout local GPL-3.0 do SUT (ignorado pelo Git)
 ```
 
 ## Comandos
 
-- `npm test`: executa toda a suíte Playwright.
+- `npm test`: executa toda a suíte Cypress em modo headless.
 - `npm run test:e2e`: executa apenas testes E2E.
 - `npm run test:api`: executa apenas testes de API.
-- `npm run test:ui`: abre o modo interativo do Playwright.
-- `npm run test:report`: abre o último relatório HTML gerado.
+- `npm run test:ui`: abre o Cypress em modo interativo.
+- `npm run cypress:verify`: verifica se o binário do Cypress está funcional.
 - `npm run typecheck`: valida os arquivos TypeScript sem gerar código.
 - `npm run sut:setup`: baixa a configuração Docker oficial do SUT localmente.
 - `npm run sut:up`: constrói e inicia o ambiente local.
@@ -98,7 +104,7 @@ tests/
 
 - Execute testes de carga e segurança apenas em instâncias locais ou ambientes
   para os quais você tenha autorização explícita.
-- Nunca publique `.env`, tokens, senhas, cookies, `storageState`, dumps de banco,
+- Nunca publique `.env`, tokens, senhas, cookies, sessões, dumps de banco,
   logs com dados pessoais, screenshots ou vídeos com informações sensíveis.
 - Gere todos os dados de teste. Não use dados do trabalho ou de pessoas reais.
 

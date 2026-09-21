@@ -9,11 +9,11 @@
     "url": "git+https://github.com/wallacinhochan/qa-automation-lab.git"
   },
   "scripts": {
-    "test": "playwright test",
-    "test:e2e": "playwright test tests/e2e",
-    "test:api": "playwright test tests/api",
-    "test:ui": "playwright test --ui",
-    "test:report": "playwright show-report",
+    "test": "cypress run",
+    "test:e2e": "cypress run --spec \"cypress/e2e/web/**/*.cy.ts\"",
+    "test:api": "cypress run --spec \"cypress/e2e/api/**/*.cy.ts\"",
+    "test:ui": "cypress open",
+    "cypress:verify": "cypress verify",
     "typecheck": "tsc --noEmit",
     "sut:setup": "powershell -ExecutionPolicy Bypass -File scripts/sut.ps1 setup",
     "sut:up": "powershell -ExecutionPolicy Bypass -File scripts/sut.ps1 up",
@@ -21,12 +21,15 @@
     "sut:status": "powershell -ExecutionPolicy Bypass -File scripts/sut.ps1 status"
   },
   "devDependencies": {
-    "@playwright/test": "1.63.0",
     "@types/node": "22.20.2",
+    "cypress": "15.21.1",
     "dotenv": "17.4.2",
     "typescript": "7.0.2"
   },
   "engines": {
-    "node": ">=20"
+    "node": ">=20.1"
+  },
+  "allowScripts": {
+    "cypress@15.21.1": true
   }
 }
